@@ -95,15 +95,13 @@ usage() {
 }
 
 # Default values
-enable_gpu=true
-enable_api=true
-enable_playwright=true
-gpu_count="all"
+gpu_count=1
 api_port=11435
 webui_port=3000
 headless=false
-build_image=true
+build_image=false
 kill_compose=false
+enable_playwright=false
 
 # Function to extract value from the parameter
 extract_value() {
@@ -174,8 +172,7 @@ else
             fi
             echo "Enabling GPU with $gpu_count GPUs"
             # Add your GPU allocation logic here
-            OLLAMA_GPU_DRIVER=$(get_gpu_driver)
-            export OLLAMA_GPU_DRIVER
+            export OLLAMA_GPU_DRIVER=$(get_gpu_driver)
             export OLLAMA_GPU_COUNT=$gpu_count # Set OLLAMA_GPU_COUNT environment variable
         fi
         DEFAULT_COMPOSE_COMMAND+=" -f docker-compose.gpu.yaml"
@@ -221,7 +218,7 @@ if [[ $headless == true ]]; then
 else
     # Ask for user acceptance
     echo -ne "${WHITE}${BOLD}Do you want to proceed with current setup? (Y/n): ${NC}"
-    read -rn1 -s choice
+    read -n1 -s choice
 fi
 
 echo
@@ -239,12 +236,9 @@ if [[ $choice == "" || $choice == "y" ]]; then
     # Wait for the command to finish
     wait $PID
 
-
-    STATUS="$?"
-
     echo
     # Check exit status
-    if [ $STATUS -eq 0 ]; then
+    if [ $? -eq 0 ]; then
         echo -e "${GREEN}${BOLD}Compose project started successfully.${NC}"
     else
         echo -e "${RED}${BOLD}There was an error starting the compose project.${NC}"

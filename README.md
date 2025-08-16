@@ -256,3 +256,69 @@ If you have any questions, suggestions, or need assistance, please open an issue
 ---
 
 Created by [Timothy Jaeryang Baek](https://github.com/tjbck) - Let's make Open WebUI even more amazing together! 💪
+
+
+<br />
+<br />
+<br />
+<hr />
+<hr />
+<hr />
+<br />
+<br />
+<br />
+
+# custom
+
+## user agent is set as open-webui
+
+just interesting to note in case it causes problems in the future
+
+
+```
+9 results - 8 files
+
+backend/open_webui/retrieval/loaders/external_web.py:
+  34                      headers={
+  35:                         "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) External Web Loader",
+  36                          "Authorization": f"Bearer {self.external_api_key}",
+
+backend/open_webui/retrieval/loaders/mistral.py:
+   87              "Authorization": f"Bearer {self.api_key}",
+   88:             "User-Agent": "OpenWebUI-MistralLoader/2.0",  # Helps API provider track usage
+   89          }
+
+  507              timeout=timeout,
+  508:             headers={"User-Agent": "OpenWebUI-MistralLoader/2.0"},
+  509              raise_for_status=False,  # We handle status codes manually
+
+backend/open_webui/retrieval/web/external.py:
+  22              headers={
+  23:                 "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) RAG Bot",
+  24                  "Authorization": f"Bearer {external_api_key}",
+
+backend/open_webui/retrieval/web/firecrawl.py:
+  24              headers={
+  25:                 "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) RAG Bot",
+  26                  "Authorization": f"Bearer {firecrawl_api_key}",
+
+backend/open_webui/retrieval/web/searxng.py:
+  69          headers={
+  70:             "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) RAG Bot",
+  71              "Accept": "text/html",
+
+backend/open_webui/retrieval/web/serply.py:
+  46          "X-User-Agent": device_type,
+  47:         "User-Agent": "open-webui",
+  48          "X-Proxy-Location": proxy_location,
+
+backend/open_webui/retrieval/web/yacy.py:
+  63          headers={
+  64:             "User-Agent": "Open WebUI (https://github.com/open-webui/open-webui) RAG Bot",
+  65              "Accept": "text/html",
+
+backend/open_webui/utils/images/comfyui.py:
+  15  
+  16: default_headers = {"User-Agent": "Mozilla/5.0"}
+  17  
+```
