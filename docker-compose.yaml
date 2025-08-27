@@ -25,6 +25,8 @@ services:
     environment:
       - 'OLLAMA_BASE_URL=http://ollama:11434'
       - 'WEBUI_SECRET_KEY='
+      # gpt5-oss can use 8192 context length over the default 4096
+      - 'OLLAMA_CONTEXT_LENGTH=8192' 
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
