@@ -1,3 +1,5 @@
+/* The `const packages` array in the JavaScript code snippet contains a list of Python packages
+that are intended to be downloaded and installed using Pyodide and micropip. */
 const packages = [
 	'micropip',
 	'packaging',
@@ -51,6 +53,14 @@ function initNetworkProxyFromEnv() {
 	console.log(`Initialized network proxy "${preferedProxy}" from env`);
 }
 
+/**
+ * The function `downloadPackages` sets up Pyodide and micropip, checks for version mismatches,
+ * downloads specified packages, and creates a lock file.
+ * @returns The `downloadPackages` function does not explicitly return any value. It performs
+ * various asynchronous operations related to setting up Pyodide and downloading packages using
+ * micropip. The function includes error handling for different scenarios but does not have a
+ * specific return value.
+ */
 async function downloadPackages() {
 	console.log('Setting up pyodide + micropip');
 
@@ -109,6 +119,10 @@ async function downloadPackages() {
 	}
 }
 
+/**
+ * The function `copyPyodide` copies all files from the Pyodide directory in node_modules to a
+ * static directory.
+ */
 async function copyPyodide() {
 	console.log('Copying Pyodide files into static directory');
 	// Copy all files from node_modules/pyodide to static/pyodide
