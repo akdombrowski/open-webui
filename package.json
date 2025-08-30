@@ -3,9 +3,9 @@
 	"version": "0.6.25",
 	"private": true,
 	"scripts": {
-		"dev": "npm run pyodide:fetch && vite dev --host",
+		"dev": "dotenvx run -- npm run pyodide:fetch && vite dev --host",
 		"dev:5050": "npm run pyodide:fetch && vite dev --port 5050",
-		"build": "npm run pyodide:fetch && vite build",
+		"build": "dotenvx run -- npm run pyodide:fetch && vite build",
 		"build:watch": "npm run pyodide:fetch && vite build --watch",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -17,9 +17,9 @@
 		"format": "prettier --plugin-search-dir --write \"**/*.{js,ts,svelte,css,md,html,json}\"",
 		"format:backend": "black . --exclude \".venv/|/venv/\"",
 		"i18n:parse": "i18next --config i18next-parser.config.ts && prettier --write \"src/lib/i18n/**/*.{js,json}\"",
-		"cy:open": "cypress open",
-		"test:frontend": "vitest --passWithNoTests",
-		"pyodide:fetch": "node scripts/prepare-pyodide.js"
+		"cy:open": "dotenvx run -- cypress open",
+		"test:frontend": "dotenvx run -- vitest --passWithNoTests",
+		"pyodide:fetch": "dotenvx run -- node scripts/prepare-pyodide.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "3.2.2",
@@ -57,6 +57,7 @@
 		"@codemirror/lang-python": "^6.1.6",
 		"@codemirror/language-data": "^6.5.1",
 		"@codemirror/theme-one-dark": "^6.1.2",
+		"@dotenvx/dotenvx": "^1.49.0",
 		"@floating-ui/dom": "^1.7.2",
 		"@huggingface/transformers": "^3.0.0",
 		"@joplin/turndown-plugin-gfm": "^1.0.62",
