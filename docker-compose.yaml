@@ -1,34 +1,50 @@
 services:
   ollama:
-    volumes:
-      - ollama:/root/.ollama
-    container_name: ollama
-    pull_policy: always
-    tty: true
-    restart: unless-stopped
     image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    container_name: ollama
+    volumes:
+      # Persist Ollama’s data (models, cache, etc.) on the host
+      # `./ollama-data` is the path to root of this project
+      # `/root/.ollama` is the path inside the container
+      - ./ollama-data:/root/.ollama
+    # keep interactive terminal open after started
+    tty: true
+    # auto restart unless manually stopped
+    restart: unless-stopped
+    # always pull from docker hub but still uses the persistent volume set up above
+    pull_policy: always
 
   open-webui:
     build:
+      # build using local directory
       context: .
       args:
+        # sets env var inside container
         OLLAMA_BASE_URL: '/ollama'
+      # builds from Dockerfile in current directory
       dockerfile: Dockerfile
+    # gives the build an image tag
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    # names the container
     container_name: open-webui
+    # volume to persist data but managed on host by docker
     volumes:
       - open-webui:/app/backend/data
+    # dependency on ollama service
     depends_on:
       - ollama
+    # map container port 3000 to 8080
     ports:
       - ${OPEN_WEBUI_PORT-3000}:8080
+    # sets env vars inside container
     environment:
       - 'OLLAMA_BASE_URL=http://ollama:11434'
       - 'WEBUI_SECRET_KEY='
+    # opens localhost to access the container
     extra_hosts:
       - host.docker.internal:host-gateway
+    # auto restart unless manually stopped
     restart: unless-stopped
 
 volumes:
-  ollama: {}
   open-webui: {}
